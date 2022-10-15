@@ -52,14 +52,12 @@ const App = () => {
   const exercises2 = 7
   const part3 = 'State of a component'
   const exercises3 = 14
-
+  console.log("Hello world!")
   return (
     <div>
       <h1><Head course={course}/></h1>
-      <p>
-        <Content part1={part1} num1={exercises1} part2={part2} num2={exercises2} part3={part3} num3={exercises3}/>
-      </p>
-      <p><Total total={exercises1 + exercises2 + exercises3}/></p>
+      <Content part1={part1} num1={exercises1} part2={part2} num2={exercises2} part3={part3} num3={exercises3}/>
+      <Total total={exercises1 + exercises2 + exercises3}/>
     </div>
   )
 }
