@@ -12,7 +12,7 @@ const Title = ({title}) => (
   </h1>
 )
 
-const Feedback = (props) => (
+const StatisticLine = (props) => (
   <div>
     {props.name} {props.value} {props.percent}
   </div>
@@ -22,18 +22,18 @@ const Statistics = (props) =>{
   if (props.isGive === 0) {
     return(
       <div>
-        No feedback given
+        No StatisticLine given
       </div>
     )
   } else {
     return(
       <div>
-        <Feedback name = {props.good} value = {props.goodValue}/>
-        <Feedback name = {props.neutral} value = {props.neutralValue} />
-        <Feedback name = {props.bad} value = {props.badValue}/>
-        <Feedback name = {props.all} value = {props.allValue}/>
-        <Feedback name = {props.average} value = {props.averageValue}/>
-        <Feedback name = {props.postive} value = {props.postiveValue} percent = {props.percent} />
+        <StatisticLine name = {props.good} value = {props.goodValue}/>
+        <StatisticLine name = {props.neutral} value = {props.neutralValue} />
+        <StatisticLine name = {props.bad} value = {props.badValue}/>
+        <StatisticLine name = {props.all} value = {props.allValue}/>
+        <StatisticLine name = {props.average} value = {props.averageValue}/>
+        <StatisticLine name = {props.postive} value = {props.postiveValue} percent = {props.percent} />
       </div>
     )
   }
