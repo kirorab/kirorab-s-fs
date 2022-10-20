@@ -1,3 +1,4 @@
+
 import { useState } from 'react'
 
 const Button = ({handleClick,text}) => (
@@ -13,9 +14,12 @@ const Title = ({title}) => (
 )
 
 const StatisticLine = (props) => (
-  <div>
-    {props.name} {props.value} {props.percent}
-  </div>
+  <tbody>
+    <tr>
+      <td>{props.name}</td>
+      <td>{props.value}{props.percent}</td>
+    </tr>
+  </tbody>
 )
 
 const Statistics = (props) =>{
@@ -28,12 +32,15 @@ const Statistics = (props) =>{
   } else {
     return(
       <div>
-        <StatisticLine name = {props.good} value = {props.goodValue}/>
-        <StatisticLine name = {props.neutral} value = {props.neutralValue} />
-        <StatisticLine name = {props.bad} value = {props.badValue}/>
-        <StatisticLine name = {props.all} value = {props.allValue}/>
-        <StatisticLine name = {props.average} value = {props.averageValue}/>
-        <StatisticLine name = {props.postive} value = {props.postiveValue} percent = {props.percent} />
+        <table>
+          <StatisticLine name = {props.good} value = {props.goodValue}/>
+          <StatisticLine name = {props.neutral} value = {props.neutralValue} />
+          <StatisticLine name = {props.bad} value = {props.badValue}/>
+          <StatisticLine name = {props.all} value = {props.allValue}/>
+          <StatisticLine name = {props.average} value = {props.averageValue}/>
+          <StatisticLine name = {props.postive} value = {props.postiveValue} percent = {props.percent} />
+        </table>
+        
       </div>
     )
   }
@@ -64,6 +71,7 @@ const App = () => {
     }
 
   return (
+    
     <div>
       <Title title="give feedback"/>
       <Button handleClick = {setGoodValue()} text = "good" />
@@ -78,6 +86,7 @@ const App = () => {
       average = "average" averageValue = {(good-bad)/(good+bad+neutral)} 
       postive = "postive" postiveValue = {100*good/(good+bad+neutral)} percent = "%" /> 
     </div>
+    
   )
 }
 
