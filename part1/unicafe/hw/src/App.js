@@ -13,17 +13,18 @@ const Title = ({title}) => (
 )
 
 const Feedback = (props) => (
-  <p>
-    {props.name} {props.value}
-  </p>
+  <div>
+    {props.name} {props.value} {props.percent}
+  </div>
 )
 const Statistics = (props) =>(
   <div>
-    <p>
       <Feedback name = {props.good} value = {props.goodValue}/>
       <Feedback name = {props.neutral} value = {props.neutralValue} />
       <Feedback name = {props.bad} value = {props.badValue}/>
-    </p>
+      <Feedback name = {props.all} value = {props.allValue}/>
+      <Feedback name = {props.average} value = {props.averageValue}/>
+      <Feedback name = {props.postive} value = {props.postiveValue} percent = {props.percent} />
   </div>
 )
 
@@ -45,7 +46,7 @@ const App = () => {
   
     const setBadValue = () => () =>{
       console.log('bad')
-      setNeutral(bad + 1)
+      setBad(bad + 1)
     }
 
   return (
@@ -55,7 +56,12 @@ const App = () => {
       <Button handleClick = {setNeutralValue()} text = "neutral"/>
       <Button handleClick = {setBadValue()} text = "bad"/>
       <Title title="staistics"/>
-      <Statistics good = "good" goodValue = {good} neutral = "neutral" neutralValue = {neutral} bad = "bad" badValue = {bad}/> 
+      <Statistics good = "good" goodValue = {good} 
+      neutral = "neutral" neutralValue = {neutral} 
+      bad = "bad" badValue = {bad}
+      all = "all" allValue = {good+bad+neutral}
+      average = "average" averageValue = {(good-bad)/(good+bad+neutral)} 
+      postive = "postive" postiveValue = {100*good/(good+bad+neutral)} percent = "%" /> 
     </div>
   )
 }
