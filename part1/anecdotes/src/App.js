@@ -12,6 +12,9 @@ const Button = (props) => (
   </button>
 )
 
+
+
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often',
@@ -24,20 +27,34 @@ const App = () => {
   ]
 
   const [selected, setSelected] = useState(0)
+  const [points,setPoints] = useState(Array(7).fill(0))
 
   const nextAnecdote = (min,max) =>() =>(
       setSelected(getRandomIntInclusive(min,max))
     )
   
+  const vote = (num) => () =>{
+    const copy = [...points]
+    copy[num]+=1
+    return (setPoints(copy))
+  } 
+  
+  console.log("selectedis"+ selected)
+  console.log(points[selected])
+  
+  
+
   return (
     <div>
       {anecdotes[selected]}
       <div>
         <Button text = "next anecdote" click = {nextAnecdote(0,6)} />
-        </div>
+        <Button text = "vote" click ={vote(selected)} />
+      </div> 
     </div>
   )
 }
 
-console.log(getRandomIntInclusive(0,6))
+
+
 export default App
