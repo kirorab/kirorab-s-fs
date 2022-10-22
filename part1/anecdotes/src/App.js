@@ -12,7 +12,11 @@ const Button = (props) => (
   </button>
 )
 
-
+const Title = ({title}) => (
+  <h1>
+    {title}
+  </h1>
+)
 
 
 const App = () => {
@@ -29,6 +33,7 @@ const App = () => {
   const [selected, setSelected] = useState(0)
   const [points,setPoints] = useState(Array(7).fill(0))
 
+  
   const nextAnecdote = (min,max) =>() =>(
       setSelected(getRandomIntInclusive(min,max))
     )
@@ -46,11 +51,19 @@ const App = () => {
 
   return (
     <div>
+      <Title title = "Anecdote of the day" />
       {anecdotes[selected]}
       <div>
-        <Button text = "next anecdote" click = {nextAnecdote(0,6)} />
-        <Button text = "vote" click ={vote(selected)} />
+        has {points[selected]} votes
+        <div>
+          <Button text = "next anecdote" click = {nextAnecdote(0,6)} />
+          <Button text = "vote" click ={vote(selected)} />
+        </div>
       </div> 
+      <div>
+        <Title title= "Anecdote with most votes" /> 
+        {anecdotes[points.indexOf(Math.max(...points))]}
+      </div>
     </div>
   )
 }
