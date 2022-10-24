@@ -16,15 +16,20 @@ const Total = ({total}) => (
   </div>
 )
 
-const Content = ({content}) =>(
+const Content = ({content}) =>{
+  const total = content.reduce((p,c)=>{
+    console.log(p.exercises,c.exercises);
+    return p+c.exercises
+  },0)
+  return(
   <div>
     <Part name = {content[0].name} exercises = {content[0].exercises}/>
     <Part name = {content[1].name} exercises = {content[1].exercises}/>
     <Part name = {content[2].name} exercises = {content[2].exercises}/>
-    <Total total = {content[0].exercises+content[1].exercises+content[2].exercises}/>
+    <Total total = {total}/>
   </div>
 )
-
+} 
 const Course = ({course}) => (
   <div>
     <Header head={course.name} />
