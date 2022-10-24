@@ -1,66 +1,85 @@
 const Header = ({head}) => (
-  <h1>
+  <h2>
     {head}
-  </h1>
+  </h2>
 )
 
-const Part = (props) => (
-  <div>
-    {props.name} {props.exercises} 
-  </div>
-)
-
-const Total = ({total}) => (
-  <div>
-    total of {total} exercises
-  </div>
-)
+const Part = ({content}) => {
+  const part = content.map(note => <p>{note.name} {note.exercises}</p>)
+  const total = content.reduce((p,c)=>p+c.exercises,0)
+  return (
+    <div>
+      {part} 
+      total of {total} exercises
+    </div>
+  )
+}
 
 const Content = ({content}) =>{
-  const total = content.reduce((p,c)=>{
-    console.log(p.exercises,c.exercises);
-    return p+c.exercises
-  },0)
+  
   return(
   <div>
-    <Part name = {content[0].name} exercises = {content[0].exercises}/>
-    <Part name = {content[1].name} exercises = {content[1].exercises}/>
-    <Part name = {content[2].name} exercises = {content[2].exercises}/>
-    <Total total = {total}/>
+    <Part content={content} />
   </div>
 )
 } 
-const Course = ({course}) => (
+const Courses = ({courses}) => (
   <div>
-    <Header head={course.name} />
-    <Content content={course.parts} />
+    <h1>Web development curriculum</h1>
+    <Header head={courses[0].name} />
+    <Content content={courses[0].parts} />
+    <Header head={courses[1].name}/>
+    <Content content={courses[1].parts} />
   </div>
 )
 
 const App = () => {
-  const course = {
-    id: 1,
-    name: 'Half Stack application development',
-    parts: [
+    const courses = [
       {
-        name: 'Fundamentals of React',
-        exercises: 10,
-        id: 1
+        name: 'Half Stack application development',
+        id: 1,
+        parts: [
+          {
+            name: 'Fundamentals of React',
+            exercises: 10,
+            id: 1
+          },
+          {
+            name: 'Using props to pass data',
+            exercises: 7,
+            id: 2
+          },
+          {
+            name: 'State of a component',
+            exercises: 14,
+            id: 3
+          },
+          {
+            name: 'Redux',
+            exercises: 11,
+            id: 4
+          }
+        ]
       },
       {
-        name: 'Using props to pass data',
-        exercises: 7,
-        id: 2
-      },
-      {
-        name: 'State of a component',
-        exercises: 14,
-        id: 3
+        name: 'Node.js',
+        id: 2,
+        parts: [
+          {
+            name: 'Routing',
+            exercises: 3,
+            id: 1
+          },
+          {
+            name: 'Middlewares',
+            exercises: 7,
+            id: 2
+          }
+        ]
       }
     ]
-  }
 
-  return <Course course={course} />
+  return <Courses courses={courses} />
 }
 
 export default App
