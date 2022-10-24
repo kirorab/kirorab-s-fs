@@ -6,7 +6,13 @@ const Header = ({head}) => (
 
 const Part = (props) => (
   <div>
-    {props.name} {props.exercises}
+    {props.name} {props.exercises} 
+  </div>
+)
+
+const Total = ({total}) => (
+  <div>
+    total of {total} exercises
   </div>
 )
 
@@ -15,6 +21,7 @@ const Content = ({content}) =>(
     <Part name = {content[0].name} exercises = {content[0].exercises}/>
     <Part name = {content[1].name} exercises = {content[1].exercises}/>
     <Part name = {content[2].name} exercises = {content[2].exercises}/>
+    <Total total = {content[0].exercises+content[1].exercises+content[2].exercises}/>
   </div>
 )
 
