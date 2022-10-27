@@ -23,13 +23,18 @@ const App = () => {
 
   const addName = (event) => {
   event.preventDefault()
-  const personObj ={
+  if (persons.every(note => note.name != newName)) {
+    const personObj ={
     name:newName,
     key:newName,
     date:new Date().toISOString,
     id:persons.length + 1
   }
   setPersons(persons.concat(personObj))
+  }
+  else{
+    alert(`${newName} is already added to phonebook!`)
+  }
   setNewName('')
 }
 
