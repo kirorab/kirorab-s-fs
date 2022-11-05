@@ -20,7 +20,15 @@ const Languages = ({languages}) => {
 }
   
 
-
+const Show = (props) => {
+  
+  props.country.important = 0;
+  
+  return (
+    <button onClick={()=>props.country.important = 1} >show</button>
+    
+  )
+}
 
 const Cdetails = ({country}) => {
 
@@ -44,7 +52,7 @@ const Cdetails = ({country}) => {
 }
 
 
-const Countries2Show = ({countries,tooMany}) => {
+const Countries2Show = ({countries,tooMany,show}) => {
   if ({tooMany} | countries.length>=10) {
     return(<div>Too many matches, specify another filter </div>)
   }
@@ -53,7 +61,7 @@ const Countries2Show = ({countries,tooMany}) => {
   }
   else return (
     <div>
-      {countries.map(note => <div key={note.name.common}>{note.name.common} </div>)}
+      {countries.map(note => <div key={note.name.common}>{note.name.common} <Show country={note} /> </div>)}
     </div>
   )
 }
@@ -74,6 +82,7 @@ const App = () => {
     setTooMany(false)
   }
 
+
   useEffect(() => {
     //console.log('yes');
     axios
@@ -89,7 +98,7 @@ const App = () => {
   return(
     <div>
       <Filter name = "find countries" newSearch={newSearch} handleSearchChange={handleSearchChange} />
-      <Countries2Show countries={couns2Show} tooMany={tooMany} />
+      <Countries2Show countries={couns2Show} tooMany={tooMany}/>
     </div>
     
   )
