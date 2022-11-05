@@ -20,15 +20,7 @@ const Languages = ({languages}) => {
 }
   
 
-const Show = (props) => {
-  
-  props.country.important = 0;
-  
-  return (
-    <button onClick={()=>props.country.important = 1} >show</button>
-    
-  )
-}
+
 
 const Cdetails = ({country}) => {
 
@@ -52,7 +44,9 @@ const Cdetails = ({country}) => {
 }
 
 
-const Countries2Show = ({countries,tooMany,show}) => {
+const Countries2Show = ({countries,tooMany}) => {
+  const [show,setShow] = useState(0)
+  
   if ({tooMany} | countries.length>=10) {
     return(<div>Too many matches, specify another filter </div>)
   }
@@ -61,7 +55,9 @@ const Countries2Show = ({countries,tooMany,show}) => {
   }
   else return (
     <div>
-      {countries.map(note => <div key={note.name.common}>{note.name.common} <Show country={note} /> </div>)}
+      {countries.map(note => {
+        return note.important ? <Cdetails country={note} key={note.name.common} /> : <div key={note.name.common}>{note.name.common}  <button onClick={()=>{note.important=!note.important;setShow(!show)}} >Show</button> </div>
+      })}
     </div>
   )
 }
@@ -72,7 +68,7 @@ const Countries2Show = ({countries,tooMany,show}) => {
 const App = () => {
   const [newSearch,setNewSearch] = useState('')
   const [countries,setCountries] = useState([])
-  const [show,setShow] = useState([])
+  
   const [tooMany,setTooMany] = useState(true)
 
   const couns2Show = tooMany ? "Too many matches, specify another filter " : countries.filter(note => note.name.common.toLowerCase().includes(newSearch.toLowerCase()))
