@@ -4,6 +4,8 @@ import Filter from './components/Filter';
 import Persons from './components/Persons';
 import axios from 'axios';
 
+
+
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
@@ -13,10 +15,11 @@ const App = () => {
 
   const notesToShow = showAll ? persons : persons.filter(note => note.name.toLowerCase().includes(newSearch.toLowerCase()))
 
-  useEffect(()=>(axios
+  const fetchData = () => {axios
     .get('http://localhost:3001/persons')
-    .then(response => setPersons(response.data)))
-    ,[])
+    .then(response => setPersons(response.data))}
+
+  useEffect(()=> {fetchData();},[])
 
 
 const handleSearchChange = (event) =>{
@@ -43,10 +46,16 @@ const addPerson = (event) => {
     const personObj ={
       name:newName,
       date:new Date().toISOString,
-      id:persons.length + 1,
+      //id:persons.length + 1,
       number:newNum
     }
-    setPersons(persons.concat(personObj))
+    axios
+      .post('http://localhost:3001/persons',personObj)
+      .then(respone => {
+        setPersons(persons.concat(personObj));
+      } )
+      
+    
   }
   else{
     alert(`${newName} is already added to numberbook!`)
