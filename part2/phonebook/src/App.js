@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import PersonForm from './components/PersonForm';
 import Filter from './components/Filter';
 import Persons from './components/Persons';
-import axios from 'axios';
+import services from './services/personService';
 
 
 
@@ -15,11 +15,13 @@ const App = () => {
 
   const notesToShow = showAll ? persons : persons.filter(note => note.name.toLowerCase().includes(newSearch.toLowerCase()))
 
-  const fetchData = () => {axios
-    .get('http://localhost:3001/persons')
-    .then(response => setPersons(response.data))}
+  
 
-  useEffect(()=> {fetchData();},[])
+  useEffect(()=> {
+    services
+    .getAll()
+    .then(persons => setPersons(persons));}
+    ,[])
 
 
 const handleSearchChange = (event) =>{
@@ -42,18 +44,19 @@ const addPerson = (event) => {
   if (newName === '') {
     alert('The name is empty')
   }
-  if (persons.every(note => note.name != newName)) {
+  if (persons.every(note => note.name !== newName)) {
     const personObj ={
       name:newName,
       date:new Date().toISOString,
       //id:persons.length + 1,
       number:newNum
     }
-    axios
-      .post('http://localhost:3001/persons',personObj)
-      .then(respone => {
-        setPersons(persons.concat(personObj));
-      } )
+    services
+    .create(personObj)
+    .then(returnPersons => {
+      setPersons(persons.concat(returnPersons));
+      
+    })
       
     
   }
