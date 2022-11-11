@@ -28,17 +28,20 @@ const App = () => {
 
 const del = (id) => {
   const delPer = {...persons.find(person => person.id === id)}
-  const delIndex = persons.indexOf(delPer)
+  console.log(delPer);
+  const delIndex = persons.findIndex(person => person.id === delPer.id)
+  console.log(delIndex);
   if (window.confirm(`Do you want to delete ${delPer.name}`)) {
     services
     .del(id)
+    var changePerson = [...persons];
+    console.log(changePerson);
+    changePerson.splice(delIndex,1);
+    console.log(changePerson);
+    setPersons(changePerson)
   }
-  var changePerson = persons;
-  changePerson.splice(delIndex,1);
-  console.log(changePerson)
-  setPersons(changePerson)
-  setShowAll(!showAll)
-  setShowAll(!showAll)
+  
+  
 }
 
 const handleSearchChange = (event) =>{
