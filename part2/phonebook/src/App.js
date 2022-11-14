@@ -19,7 +19,8 @@ const App = () => {
   const fetchData = () => {
     services
     .getAll()
-    .then(persons => setPersons(persons));
+    .then(persons => setPersons(persons))
+    .catch(err => {console.log('error');});
   }
 
   useEffect(()=> {
@@ -28,17 +29,10 @@ const App = () => {
 
 const del = (id) => {
   const delPer = {...persons.find(person => person.id === id)}
-  console.log(delPer);
-  const delIndex = persons.findIndex(person => person.id === delPer.id)
-  console.log(delIndex);
   if (window.confirm(`Do you want to delete ${delPer.name}`)) {
     services
     .del(id)
-    var changePerson = [...persons];
-    console.log(changePerson);
-    changePerson.splice(delIndex,1);
-    console.log(changePerson);
-    setPersons(changePerson)
+    setPersons(persons.filter(node => node.id !== id))
   }
   
   
@@ -74,14 +68,21 @@ const addPerson = (event) => {
     services
     .create(personObj)
     .then(returnPersons => {
-      setPersons(persons.concat(returnPersons));
-      
+      setPersons(persons.concat(returnPersons))
+      .catch(err => {console.log('error');});
     })
       
     
   }
   else{
-    alert(`${newName} is already added to numberbook!`)
+    if(window.confirm(`${newName} is already added to numberbook, replace the old number with a new one?`)){
+      const update = persons.find(person => person.name === newName)
+      services
+      .update(update.id,{...update,number:newNum})
+      .then(returnPerson => {console.log(returnPerson);
+                            setPersons(persons.filter(node => node.id !== update.id).concat(returnPerson))})
+      .catch(err => {console.log('error');});
+    }
   }
   setNewName('')
   setNewNum('')
