@@ -3,6 +3,19 @@ import PersonForm from './components/PersonForm';
 import Filter from './components/Filter';
 import Person from './components/Person';
 import services from './services/personService';
+import './success.css'
+
+
+const Notification = ({message}) => {
+  if ({message} == null) {
+    return null
+  }
+  else return(
+    <div className='success'>
+      {message}
+    </div>
+  )
+}
 
 
 
@@ -12,7 +25,7 @@ const App = () => {
   const [newNum,setNewNum] = useState('')
   const [newSearch,setNewSearch] = useState('')
   const [showAll,setShowAll] = useState(true)
-  
+  const [successMessage,setSuccessMessage] = useState(null)
 
   const notesToShow = showAll ? persons : persons.filter(note => note.name.toLowerCase().includes(newSearch.toLowerCase()))
 
@@ -69,8 +82,12 @@ const addPerson = (event) => {
     .create(personObj)
     .then(returnPersons => {
       setPersons(persons.concat(returnPersons))
-      .catch(err => {console.log('error');});
+      setSuccessMessage(`Added ${returnPersons.name}`)
+      setTimeout(() => {
+        setSuccessMessage(null)
+      }, 5000);
     })
+    .catch(err => {console.log('error');});
       
     
   }
@@ -80,7 +97,7 @@ const addPerson = (event) => {
       services
       .update(update.id,{...update,number:newNum})
       .then(returnPerson => {console.log(returnPerson);
-                            setPersons(persons.filter(node => node.id !== update.id).concat(returnPerson))})
+      setPersons(persons.filter(node => node.id !== update.id).concat(returnPerson))})
       .catch(err => {console.log('error');});
     }
   }
@@ -90,6 +107,7 @@ const addPerson = (event) => {
 
   return (
     <div>
+      <Notification message={successMessage} />
       <h2>phonebook</h2>
       <Filter newSearch={newSearch} handleSearchChange={handleSearchChange} />
       <h3>add a new</h3>
